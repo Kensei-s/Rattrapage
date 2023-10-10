@@ -1,0 +1,60 @@
+{% extends 'template.html.twig' %}
+
+
+{% block stylesheets %}
+    <style>
+        .password-field-div {
+            /*display: none;*/
+        }
+        /*.profile-image {*/
+        /*    width: 24px;*/
+        /*    height: 24px;*/
+        /*    border-radius: 50%;*/
+        /*    object-fit: cover; !* Pour s'assurer que l'image couvre la taille sans se déformer *!*/
+        /*}*/
+    </style>
+{% endblock %}
+
+
+{% block title %}Edit GiftList{% endblock %}
+
+{% block body %}
+    <h1>Edit GiftList</h1>
+
+
+    {{ include('gift_list/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_gift_list_index') }}" class="btn btn-secondary">back to list</a>
+
+    {{ include('gift_list/_delete_form.html.twig') }}
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+
+        $(document).ready(function() {
+            const $statusCheckbox = $('#gift_list_status');
+            const $passwordDiv = $('#gift_list_password').closest('.mb-3'); // Cible directement la div englobante du champ password
+            const $passwordField = $('.gift_list_password');
+
+
+            {% if gift_list.status == "No" %}
+                console.log("hello");
+                $statusCheckbox.prop('checked', true);
+                $passwordDiv.addClass('password-field-div');
+            {% else %}
+                $passwordDiv.removeClass('password-field-div');
+            {% endif %}
+
+
+            $statusCheckbox.change(function() {
+                if ($(this).is(':checked')) {
+                    $passwordDiv.removeClass('password-field-div');
+                } else {
+                    $passwordDiv.addClass('password-field-div');
+                }
+            });
+        });
+    </script>
+{% endblock %}
